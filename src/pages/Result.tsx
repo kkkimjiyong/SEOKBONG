@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Footer } from "../global/Footer";
 import { Header } from "../global/Header";
@@ -12,6 +12,7 @@ type Tdata = {
 };
 
 export const Result = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [data, setData] = useState<Tdata>();
 
@@ -42,6 +43,9 @@ export const Result = () => {
       <StyledContent>{data?.content?.join(" ")}</StyledContent>
       <StyledShareButton onClick={copyUrl}>
         링크 복사하여 공유하기
+      </StyledShareButton>
+      <StyledShareButton onClick={() => navigate("/write")}>
+        새로운 글쓰러가기
       </StyledShareButton>
       <Footer />
     </Layout>

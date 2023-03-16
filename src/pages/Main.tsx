@@ -3,14 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { Footer } from "../global/Footer";
 import { Header } from "../global/Header";
 import { Layout } from "../global/Layout";
-import MainBird from "../assets/MainBird.png";
 import styled from "styled-components";
 
 export const Main = () => {
   const navigate = useNavigate();
   return (
     <Layout>
-      <StyledMainImg src={MainBird} alt="메인로고" />
+      {/* <StyledMainImg src={MainBird} alt="메인로고" /> */}
+      <div>
+        메인에는 이때까지 쓴 글들이 액자에 담긴채로 자동슬라이드 형식으로 계속
+        넘어가는 형태
+      </div>
       <StyledButton onClick={() => navigate("/write")}>글쓰러가기</StyledButton>
     </Layout>
   );

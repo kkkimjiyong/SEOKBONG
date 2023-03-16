@@ -4,3 +4,5 @@ declare namespace NodeJS {
     VITE_SUPABASE_URL: string;
   }
 }
+
+declare module "*.png";

@@ -30,7 +30,7 @@ export const ShareMain = () => {
   return (
     <Layout>
       <StyledTitleBox>{data?.title}</StyledTitleBox>
-      <StyledMainImg src={MainBird} alt="메인로고" />
+      <StyledContentBox>{data?.content}</StyledContentBox>
       <StyledButton onClick={() => navigate(`/write/${id}`)}>
         마저 쓰러가기
       </StyledButton>
@@ -42,10 +42,19 @@ const StyledTitleBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 90%;
   margin-top: 220px;
+  font-size: 24px;
+  font-weight: 700;
+`;
+
+const StyledContentBox = styled.div`
+  margin-top: 30px;
+  line-height: 1.6;
+  width: 90%;
   font-size: 20px;
   font-weight: 700;
+  filter: blur(3px);
 `;
 
 const StyledMainImg = styled.img`
@@ -57,7 +66,7 @@ const StyledButton = styled.button`
   bottom: 70px;
   width: 80%;
   height: 50px;
-  background-color: #906fd4;
+  background-color: gray;
   border: none;
   border-radius: 10px;
   color: white;
@@ -65,6 +74,5 @@ const StyledButton = styled.button`
   font-size: 16px;
   :hover {
     cursor: pointer;
-    color: #af93e8;
   }
 `;
