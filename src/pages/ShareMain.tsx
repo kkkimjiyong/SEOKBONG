@@ -1,5 +1,5 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Footer } from "../global/Footer";
 import { Header } from "../global/Header";
 import { Layout } from "../global/Layout";
@@ -8,14 +8,38 @@ import MainBackground2 from "../assets/MainBack2.png";
 // import { ReactComponent as MainFont } from "../assets/MainFont.svg";
 import MainFont from "../assets/MainFont.png";
 import styled from "styled-components";
+import { supabase } from "../lib/api";
 
-export const Main = () => {
+export const ShareMain = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [title, setTitle] = useState<string>("");
+  const [content, setContent] = useState<any>([]);
+  const [newContent, setNewContent] = useState<string>("");
+
+  const getData = async () => {
+    const { data }: any = await supabase
+      .from("writedown")
+      .select("title,content,name")
+      .eq("titleId", id);
+    if (data.length === 0) {
+      alert("에러발생");
+    }
+
+    setTitle(data[0].title);
+    // 문장 합치기
+    console.log(data);
+    setContent(data);
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+  console.log(content);
   return (
     <Layout>
       <StyledContainer>
         <StyledMainImg src={MainBackground2} alt="메인배경" />
-        {/* <MainFont className="mainfont" /> */}
+
         <img src={MainFont} alt="메인로고" className="mainfont" />
         <StyledHelpTxt>
           방금 내 친구가 <span className="white">릴레이 스토리</span>를
@@ -25,31 +49,23 @@ export const Main = () => {
           무궁무진하고 가슴 벅찬 <span className="white">스토리의 세계</span>에
           함께하세요!
         </StyledHelpTxt>
+        <StyledTitle>제목: {title}</StyledTitle>
         <StyledMainListBox>
-          <StyledMainItem>
-            어머니께서 붓과 벼루와 종이를 가져오셨다. “나는 떡을 썰 테니, 너는
-            글을 쓰거라.”
-            <div className="sub">2023.02.21 - 민지</div>
-          </StyledMainItem>
-          <StyledMainItem>
-            한석봉은 놀란 눈으로 어머니를 쳐다보았다. 그 짧은 사이에, 한석봉의
-            어머니는 등잔의 촛불을 후 불어서 껐다. 이상하다.{" "}
-            <div className="sub">2023.02.21 - 해린</div>
-          </StyledMainItem>
-          <StyledMainItem>
-            어머니께서는 묵묵부답으로 계속해서 떡을 썰고 계셨고, 민망해진 석봉은
-            자연스럽게 붓을 들지 아니할 수가 없었다.{" "}
-            <div className="sub">2023.02.21 - 하니</div>
-          </StyledMainItem>
-          <StyledMainItem>
-            방 안이 온통 깜깜해지자, 어머니가 떡을 써는 소리가 들리기 시작했다.
-            “아니, 어머니 제가 아까 중국당면 시켰는데 ...”{" "}
-            <div className="sub">2023.02.21 - 혜민</div>
-          </StyledMainItem>
+          {content?.map((el: any) => {
+            return (
+              <StyledMainItem>
+                {el.content}
+                <div className="sub">2023.02.21 - 아무개</div>
+              </StyledMainItem>
+            );
+          })}
+
           <StyledMainListShadow />
         </StyledMainListBox>
-        <StyledButton onClick={() => navigate("/write")}>Start</StyledButton>
-        {/* <StyledContinueTxt>나도 이어서 쓰러가기</StyledContinueTxt> */}
+        <StyledButton onClick={() => navigate(`/write/${id}`)}>
+          Start
+        </StyledButton>
+        <StyledContinueTxt>나도 이어서 쓰러가기</StyledContinueTxt>
       </StyledContainer>
     </Layout>
   );
@@ -79,6 +95,7 @@ const StyledMainImg = styled.img`
 `;
 
 const StyledHelpTxt = styled.div`
+  z-index: 2;
   margin-top: 60px;
   z-index: 2;
   font-size: 12px;
@@ -90,23 +107,29 @@ const StyledHelpTxt = styled.div`
   }
 `;
 
+const StyledTitle = styled.div`
+  margin-top: 50px;
+  z-index: 2;
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  width: 85%;
+`;
 const StyledMainListBox = styled.div`
   position: relative;
   color: white;
   margin-top: 30px;
   z-index: 2;
   width: 85%;
-  height: 50%;
-
-  @media screen and (max-height: 680px) {
-    height: 40%;
-  }
-  padding: 40px;
+  padding: 20px 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
+  @media screen and (max-height: 680px) {
+    height: 20%;
+  }
 `;
 const StyledMainListShadow = styled.div`
   position: absolute;
@@ -122,7 +145,9 @@ const StyledMainListShadow = styled.div`
 `;
 
 const StyledMainItem = styled.div`
-  margin-top: 25px;
+  filter: blur(1px);
+  width: 80%;
+  margin-bottom: 20px;
   font-size: 12px;
   line-height: 1.5;
   word-break: break-all;
@@ -139,9 +164,9 @@ const StyledMainItem = styled.div`
 const StyledButton = styled.button`
   z-index: 3;
   font-size: 20px;
-  bottom: 70px;
   width: 85%;
   height: 50px;
+  margin-top: 70px;
   background-color: #eb7305;
   border: none;
 

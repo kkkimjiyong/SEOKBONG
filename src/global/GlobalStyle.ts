@@ -14,6 +14,8 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup, 
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
+  font-family: 'Inter', sans-serif;
+  color: white;
   margin: 0;
   padding: 0;
   border: 0;

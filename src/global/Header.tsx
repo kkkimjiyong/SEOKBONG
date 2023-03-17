@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 export const Header = ({ text }: { text?: string }) => {
-  return <Container>{text}</Container>;
+  return <Container></Container>;
 };
 
 const Container = styled.div`

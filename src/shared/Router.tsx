@@ -3,8 +3,8 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Write } from "../pages/Write";
 import { Result } from "../pages/Result";
-import { ShareMain } from "../pages/Main[id]";
-import { ShareWrite } from "../pages/Write[id]";
+import { ShareMain } from "../pages/ShareMain";
+import { ShareWrite } from "../pages/ShareWrite";
 
 const Router = () => {
   return (

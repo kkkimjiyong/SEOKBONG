@@ -5,4 +5,5 @@ export interface ImportMeta {
   };
 }
 
+declare module "uuid/v4";
 declare module "*.png";
