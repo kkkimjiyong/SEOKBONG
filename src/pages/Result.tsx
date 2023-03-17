@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Layout } from "../global/Layout";
 import { supabase } from "../lib/api";
+import ReactGA from "react-ga4";
 
 type Tdata = {
   title: string;
@@ -55,7 +56,16 @@ export const Result = () => {
         <div className="helptxt">다음 문장을 이어 적어주세요! |</div>
       </StyledListBox>
 
-      <StyledShareButton onClick={copyUrl}>
+      <StyledShareButton
+        onClick={() => {
+          ReactGA.event({
+            category: "Button",
+            action: "copyUrl",
+            label: "result",
+          });
+          copyUrl();
+        }}
+      >
         <svg
           style={{ marginRight: "10px" }}
           width="16"
