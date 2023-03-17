@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { Footer } from "../global/Footer";
-import { Header } from "../global/Header";
 import { Layout } from "../global/Layout";
 import { supabase } from "../lib/api";
 

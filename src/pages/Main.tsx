@@ -1,7 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Footer } from "../global/Footer";
-import { Header } from "../global/Header";
 import { Layout } from "../global/Layout";
 import MainBackground from "../assets/MainBackGround.png";
 import MainBackground2 from "../assets/MainBack2.png";
