@@ -103,11 +103,11 @@ export const ShareWrite = () => {
 };
 
 const StyledTitle = styled.div`
-  width: 80%;
+  width: 85%;
   display: flex;
   flex-direction: column;
   line-height: 1.6;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   margin-top: 100px;
   .sub {
@@ -124,7 +124,7 @@ const StyledListBox = styled.div`
   flex-direction: column;
   align-items: center;
   font-size: 14px;
-  width: 80%;
+  width: 85%;
   padding: 15px 25px;
   background-color: #3b3b3b;
   line-height: 1.6;
@@ -148,7 +148,7 @@ const StyledMainItem = styled.div`
 
 const StyledInput = styled.input`
   margin-top: 50px;
-  width: 80%;
+  width: 85%;
   height: 50px;
   border: none;
   padding: 0 3%;
@@ -164,7 +164,7 @@ const StyledInput = styled.input`
 
 const StyledNextButton = styled.button`
   margin-top: 15px;
-  width: 80%;
+  width: 85%;
   font-size: 20px;
   height: 50px;
   border: none;

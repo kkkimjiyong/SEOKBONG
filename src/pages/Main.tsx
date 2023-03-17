@@ -18,7 +18,7 @@ export const Main = () => {
         <StyledHelpTxt>
           방금 내 친구가 <span className="white">릴레이 스토리</span>를
           공유했습니다. <br />
-          seok-bong이 여러분의<span className="white">상상력</span>을
+          seok-bong이 여러분의 <span className="white">상상력</span>을
           응원합니다. <br />
           무궁무진하고 가슴 벅찬 <span className="white">스토리의 세계</span>에
           함께하세요!

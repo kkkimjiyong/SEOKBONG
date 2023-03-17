@@ -14,7 +14,7 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup, 
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-  font-family: 'Inter', sans-serif;
+
   color: white;
   margin: 0;
   padding: 0;
@@ -31,7 +31,7 @@ footer, header, hgroup, menu, nav, section {
 body {
   line-height: 1;
   font-weight: 300;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 ol, ul {
   list-style: none;
