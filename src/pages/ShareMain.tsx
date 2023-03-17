@@ -121,6 +121,7 @@ const StyledMainListBox = styled.div`
   margin-top: 30px;
   z-index: 2;
   width: 85%;
+  max-height: 40%;
   padding: 20px 0;
   display: flex;
   flex-direction: column;
