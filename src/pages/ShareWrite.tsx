@@ -39,7 +39,16 @@ export const ShareWrite = () => {
   };
 
   const onClickHandler = () => {
-    postData();
+    switch (process) {
+      case 0:
+        setProcess(1);
+        break;
+      case 1:
+        postData();
+        break;
+      default:
+        break;
+    }
   };
 
   useEffect(() => {
@@ -48,19 +57,27 @@ export const ShareWrite = () => {
 
   return (
     <Layout>
-      <StyledTitle>
-        이어질 문장을 적어주세요.{" "}
-        <span className="sub">
-          이제 붓자루는 당신에게 있습니다. 제 2의 한석봉에 도전하세요.
-        </span>
-      </StyledTitle>
+      {process === 0 && (
+        <StyledTitle>
+          이어질 문장을 적어주세요.{" "}
+          <span className="sub">
+            이제 붓자루는 당신에게 있습니다. 제 2의 한석봉에 도전하세요.
+          </span>
+        </StyledTitle>
+      )}{" "}
+      {process === 1 && (
+        <StyledTitle>
+          당신의 이름을 적어주세요
+          <span className="sub">모든 붓자루에는 주인이 있기 마련입니다.</span>
+        </StyledTitle>
+      )}
       <StyledListBox>
         {content.map((el: any) => {
           return (
             <StyledMainItem>
               {el.content}
               <span className="sub">
-                {el.created_at.split("").slice(0, 10)} - 아무개
+                {el.created_at.split("").slice(0, 10)} - {el.name}
               </span>
             </StyledMainItem>
           );
@@ -68,11 +85,18 @@ export const ShareWrite = () => {
 
         <div className=""></div>
       </StyledListBox>
-      <StyledInput
-        onChange={(e) => setNewContent(e.target.value)}
-        placeholder="예) 어머니는 종이와 붓과 벼루를 가져오셨다."
-      />
-
+      {process === 0 && (
+        <StyledInput
+          onChange={(e) => setNewContent(e.target.value)}
+          placeholder="예) 어머니는 종이와 붓과 벼루를 가져오셨다."
+        />
+      )}{" "}
+      {process === 1 && (
+        <StyledInput
+          onChange={(e) => setName(e.target.value)}
+          placeholder="예) 한석봉"
+        />
+      )}
       <StyledNextButton onClick={onClickHandler}>Finish</StyledNextButton>
     </Layout>
   );

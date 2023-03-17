@@ -46,7 +46,7 @@ export const Result = () => {
             <StyledMainItem>
               {el.content}
               <span className="sub">
-                {el.created_at.split("").slice(0, 10)} - 아무개
+                {el.created_at.split("").slice(0, 10)} - {el.name}
               </span>
             </StyledMainItem>
           );
