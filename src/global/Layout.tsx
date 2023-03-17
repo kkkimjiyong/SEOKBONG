@@ -26,6 +26,6 @@ const Wrap = styled.div`
   align-items: center;
   margin: 0 auto;
   width: 100%;
-  max-width: 375px;
+  max-width: 390px;
   height: 100vh;
 `;

@@ -53,4 +53,7 @@ a {
   text-decoration: none;
   color: inherit;
 }
+:root {
+  --color-orange : EB7305;
+}
 `;
