@@ -6,6 +6,7 @@ import { supabase } from "../lib/api";
 import CaptureMain1 from "../assets/CaptureBack1.png";
 import WaterMark from "../assets/waterMark.png";
 import html2canvas from "html2canvas";
+import { EditTable } from "./EditTable";
 
 export const Capture = () => {
   const navigate = useNavigate();
@@ -38,8 +39,11 @@ export const Capture = () => {
   const [font, setFont] = useState<any>();
 
   const fontData = [
-    { fontFamily: "Nanum Brush Script", fontSize: "24px" },
+    { fontFamily: "Black And White Picture", fontSize: "24px" },
     { fontFamily: "Dokdo", fontSize: "24px" },
+    { fontFamily: "Nanum Brush Script", fontSize: "24px" },
+    { fontFamily: "Noto Sans KR", fontSize: "24px" },
+    { fontFamily: "Song Myung, serif", fontSize: "24px" },
   ];
 
   // -------------------  캡쳐  -------------------------------
@@ -70,27 +74,11 @@ export const Capture = () => {
   return (
     <Layout>
       <div onClick={() => navigate(`/result/${id}`)}>뒤로가기</div>
-      <StyledFontBox>
-        {" "}
-        <StyledFontButton
-          font={fontData[0]}
-          onClick={() => setFont(fontData[0])}
-        >
-          가
-        </StyledFontButton>{" "}
-        <StyledFontButton
-          font={fontData[1]}
-          onClick={() => setFont(fontData[1])}
-        >
-          가
-        </StyledFontButton>{" "}
-      </StyledFontBox>
-
+      <EditTable setFont={setFont} />
       <StyledContainer font={font} ref={captureRef}>
         <StyledBack src={CaptureMain1} alt="배경" />{" "}
         <StyledTitle>{title}</StyledTitle>
         <StyledName>{name}</StyledName>
-        {/* <StyledContent>{content}</StyledContent> */}
         <StyledContent>
           {" "}
           {content.map((el: any) => {
@@ -108,10 +96,25 @@ export const Capture = () => {
         </StyledContent>
         <StyledWaterMark src={WaterMark} alt="SEOK-BONG" />
       </StyledContainer>
-      <StyledButton onClick={onHtmlToPng}>이미지 다운로드</StyledButton>
       <StyledHideButton onClick={() => setHideSub(!hideSub)}>
-        문장별 글쓴이 지우기
+        문장별 글쓴이 {hideSub ? "지우기" : "보이기"}
       </StyledHideButton>
+      <StyledButton onClick={onHtmlToPng}>
+        <svg
+          style={{ marginRight: "10px" }}
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M14 11V14H2V11H0V14C0 15.1 0.9 16 2 16H14C15.1 16 16 15.1 16 14V11H14ZM3 5L4.41 6.41L7 3.83V12H9V3.83L11.59 6.41L13 5L8 0L3 5Z"
+            fill="white"
+          />
+        </svg>
+        이미지 다운로드
+      </StyledButton>
     </Layout>
   );
 };
@@ -184,7 +187,7 @@ const StyledContainer = styled.div<{ font: any }>`
   align-items: center;
   /* justify-content: center; */
   flex-direction: column;
-  margin-top: 80px;
+  margin-top: 150px;
   width: 80%;
   height: 50%;
 `;
@@ -216,32 +219,8 @@ const StyledHideButton = styled.button`
   z-index: 3;
   font-size: 12px;
   width: 40%;
-  height: 50px;
+  height: 30px;
   background-color: #eb7305;
-  border: none;
-  color: white;
-  font-weight: 700;
-  :hover {
-    cursor: pointer;
-    background-color: white;
-    color: #eb7305;
-  }
-`;
-
-const StyledFontBox = styled.div`
-  display: flex;
-  width: 90%;
-  justify-content: space-around;
-`;
-
-const StyledFontButton = styled.button<{ font: any }>`
-  font-family: ${({ font }) => font && `${font.fontFamily}`};
-  margin-top: 30px;
-  z-index: 3;
-  font-size: 20px;
-  width: 20%;
-  height: 50px;
-  background-color: gray;
   border: none;
   color: white;
   font-weight: 700;

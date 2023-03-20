@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "../global/Layout";
 import MainBackground from "../assets/MainBackGround.png";
@@ -6,9 +6,21 @@ import MainBackground2 from "../assets/MainBack2.png";
 // import { ReactComponent as MainFont } from "../assets/MainFont.svg";
 import MainFont from "../assets/MainFont.png";
 import styled from "styled-components";
+import { supabase } from "../lib/api";
 
 export const Main = () => {
   const navigate = useNavigate();
+  const [count, setCount] = useState<any>();
+  useEffect(() => {
+    const getShareData = async () => {
+      const { count } = await supabase
+        .from("writedown")
+        .select("titleId", { count: "exact", head: true });
+      console.log(count);
+      setCount(count);
+    };
+    getShareData();
+  }, []);
   return (
     <Layout>
       <StyledContainer>
@@ -47,7 +59,7 @@ export const Main = () => {
           <StyledMainListShadow />
         </StyledMainListBox>
         <StyledButton onClick={() => navigate("/write")}>Start</StyledButton>
-        {/* <StyledContinueTxt>나도 이어서 쓰러가기</StyledContinueTxt> */}
+        <StyledContinueTxt>참여 수 : {count}</StyledContinueTxt>
       </StyledContainer>
     </Layout>
   );
@@ -155,4 +167,5 @@ const StyledContinueTxt = styled.div`
   z-index: 2;
   color: white;
   margin-top: 20px;
+  font-weight: 700;
 `;
