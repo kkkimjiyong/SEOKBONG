@@ -41,10 +41,19 @@ export const ShareWrite = () => {
   const onClickHandler = () => {
     switch (process) {
       case 0:
-        setProcess(1);
+        if (newContent.trim().length !== 0) {
+          setProcess(1);
+        } else {
+          alert("빈칸을 채워주시오!");
+        }
+
         break;
       case 1:
-        postData();
+        if (name.trim().length !== 0) {
+          postData();
+        } else {
+          alert("빈칸을 채워주시오!");
+        }
         break;
       default:
         break;

@@ -30,7 +30,7 @@ export const Result = () => {
 
   const copyUrl = () => {
     navigator.clipboard.writeText(url).then(() => {
-      console.log(url, "복사완료");
+      alert("복사완료");
     });
   };
 
@@ -40,7 +40,22 @@ export const Result = () => {
 
   return (
     <Layout>
-      <StyledTitle>제목: {title}</StyledTitle>
+      <StyledTitle>
+        <div className="title"> 제목: {title} </div>
+        <div
+          className="copy"
+          onClick={() => {
+            ReactGA.event({
+              category: "Button",
+              action: "copyUrl",
+              label: "result",
+            });
+            copyUrl();
+          }}
+        >
+          이어쓰기 링크복사
+        </div>
+      </StyledTitle>
       <StyledListBox>
         {content.map((el: any) => {
           return (
@@ -56,16 +71,7 @@ export const Result = () => {
         <div className="helptxt">다음 문장을 이어 적어주세요! |</div>
       </StyledListBox>
 
-      <StyledShareButton
-        onClick={() => {
-          ReactGA.event({
-            category: "Button",
-            action: "copyUrl",
-            label: "result",
-          });
-          copyUrl();
-        }}
-      >
+      <StyledShareButton onClick={() => navigate(`/capture/${id}`)}>
         <svg
           style={{ marginRight: "10px" }}
           width="16"
@@ -99,15 +105,49 @@ export const Result = () => {
         </svg>
         새로운 글 작성
       </StyledShareButton>
+      {/* <StyledShareButton
+        onClick={() => {
+          navigate(`/capture/${id}`);
+        }}
+      >
+        <svg
+          style={{ marginRight: "10px" }}
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M14 11V14H2V11H0V14C0 15.1 0.9 16 2 16H14C15.1 16 16 15.1 16 14V11H14ZM3 5L4.41 6.41L7 3.83V12H9V3.83L11.59 6.41L13 5L8 0L3 5Z"
+            fill="white"
+          />
+        </svg>
+        자랑하러가기
+      </StyledShareButton> */}
     </Layout>
   );
 };
 
 const StyledTitle = styled.div`
-  font-size: 20px;
-  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin: 100px 0 0px 0;
   width: 80%;
+  .title {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .copy {
+    background-color: #3b3b3b;
+    font-size: 14px;
+    padding: 10px;
+    :hover {
+      cursor: pointer;
+      background-color: gray;
+    }
+  }
 `;
 
 const StyledListBox = styled.div`

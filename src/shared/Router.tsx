@@ -5,6 +5,7 @@ import { Write } from "../pages/Write";
 import { Result } from "../pages/Result";
 import { ShareMain } from "../pages/ShareMain";
 import { ShareWrite } from "../pages/ShareWrite";
+import { Capture } from "../pages/Capture";
 
 const Router = () => {
   return (
@@ -14,6 +15,7 @@ const Router = () => {
       <Route path="/write" element={<Write />} />
       <Route path="/write/:id" element={<ShareWrite />} />
       <Route path="/result/:id" element={<Result />} />
+      <Route path="/capture/:id" element={<Capture />} />
     </Routes>
   );
 };

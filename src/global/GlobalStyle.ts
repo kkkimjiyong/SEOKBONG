@@ -1,4 +1,6 @@
 import { createGlobalStyle } from "styled-components";
+import NanumBrush from "../assets/fonts/NanumBrushScript-Regular.woff";
+import Dokdo from "../assets/fonts/Dokdo-Regular.woff";
 
 export const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -55,6 +57,7 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
 :root {
   --color-orange : EB7305;
 }

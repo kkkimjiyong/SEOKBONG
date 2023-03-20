@@ -28,13 +28,26 @@ export const Write = () => {
   const onClickHandler = () => {
     switch (process) {
       case 0:
-        setProcess(1);
+        if (title.trim().length !== 0) {
+          setProcess(1);
+        } else {
+          alert("빈칸을 채워주세요!");
+        }
+
         break;
       case 1:
-        setProcess(2);
+        if (content.trim().length !== 0) {
+          setProcess(2);
+        } else {
+          alert("빈칸을 채워주세요!");
+        }
         break;
       case 2:
-        postData();
+        if (name.trim().length !== 0) {
+          postData();
+        } else {
+          alert("빈칸을 채워주세요!");
+        }
         break;
       default:
         break;
@@ -71,7 +84,7 @@ export const Write = () => {
       {process === 0 && (
         <StyledInput
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="예) 효자 한석봉"
+          placeholder="예) 효자 한석봉 (10글자 이내)"
         />
       )}
       {process === 1 && (
