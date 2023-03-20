@@ -1,9 +1,19 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-
+import CaptureMain1 from "../assets/CaptureBack1.png";
+import CaptureMain2 from "../assets/CaptureBack2.jpg";
+import CaptureMain3 from "../assets/CaptureBack3.jpg";
+import CaptureMain4 from "../assets/CaptureBack4.jpg";
+import CaptureMain5 from "../assets/CaptureBack5.jpg";
 export const EditTable = ({
   setFont,
+  setBack,
+  modal,
+  setModal,
 }: {
+  modal: boolean;
+  setModal: React.Dispatch<React.SetStateAction<any>>;
+  setBack: React.Dispatch<React.SetStateAction<any>>;
   setFont: React.Dispatch<React.SetStateAction<any>>;
 }) => {
   const fontData = [
@@ -14,7 +24,14 @@ export const EditTable = ({
     { fontFamily: "Song Myung, serif", fontSize: "24px" },
   ];
 
-  const [modal, setModal] = useState<boolean>(true);
+  const backData = [
+    { name: "1", src: CaptureMain1 },
+    { name: "2", src: CaptureMain2 },
+    { name: "3", src: CaptureMain3 },
+    { name: "4", src: CaptureMain4 },
+    { name: "5", src: CaptureMain5 },
+  ];
+
   const [category, setCategory] = useState<string>("font");
 
   return (
@@ -33,40 +50,37 @@ export const EditTable = ({
           배경
         </StyledEditCategory>
       </StyledEditCategoryBox>
-      <div>
+      {category === "font" && (
+        <div>
+          <StyledFontBox>
+            {fontData.map((el) => {
+              return (
+                <StyledFontButton font={el} onClick={() => setFont(el)}>
+                  석봉
+                </StyledFontButton>
+              );
+            })}
+          </StyledFontBox>
+          <StyledFontColorBox>
+            <StyledFontColor />
+            <StyledFontColor className="blue" />
+            <StyledFontColor className="yellow" />
+            <StyledFontColor className="purple" />
+            <StyledFontColor className="white" />
+          </StyledFontColorBox>
+        </div>
+      )}
+      {category === "back" && (
         <StyledFontBox>
-          <StyledFontButton
-            font={fontData[0]}
-            onClick={() => setFont(fontData[0])}
-          >
-            석봉
-          </StyledFontButton>{" "}
-          <StyledFontButton
-            font={fontData[1]}
-            onClick={() => setFont(fontData[1])}
-          >
-            석봉
-          </StyledFontButton>
-          <StyledFontButton
-            font={fontData[2]}
-            onClick={() => setFont(fontData[2])}
-          >
-            석봉
-          </StyledFontButton>{" "}
-          <StyledFontButton
-            font={fontData[3]}
-            onClick={() => setFont(fontData[3])}
-          >
-            석봉
-          </StyledFontButton>{" "}
-          <StyledFontButton
-            font={fontData[4]}
-            onClick={() => setFont(fontData[4])}
-          >
-            석봉
-          </StyledFontButton>{" "}
+          {backData.map((el) => {
+            return (
+              <StyledBackButton onClick={() => setBack(el.src)}>
+                {el.name}
+              </StyledBackButton>
+            );
+          })}
         </StyledFontBox>
-      </div>{" "}
+      )}
       <StyledHideBtn modal={modal} onClick={() => setModal(!modal)}>
         {modal ? "글 꾸미기" : "숨기기"}
       </StyledHideBtn>
@@ -112,13 +126,37 @@ const StyledEditCategory = styled.div<{ category: boolean }>`
   }
 `;
 
-const StyledFontTitle = styled.div`
-  font-size: 16px;
-  font-weight: 700;
-  text-align: center;
-  padding: 10px 0;
-  background-color: gray;
+const StyledFontColorBox = styled.div`
+  display: flex;
+  width: 100%;
+  margin-top: 10px;
+  justify-content: space-around;
+  align-items: center;
 `;
+
+const StyledFontColor = styled.div`
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  border: 1px solid black;
+  background-color: red;
+  :hover {
+    cursor: pointer;
+  }
+  &.blue {
+    background-color: blue;
+  }
+  &.purple {
+    background-color: purple;
+  }
+  &.white {
+    background-color: white;
+  }
+  &.yellow {
+    background-color: yellow;
+  }
+`;
+
 const StyledFontBox = styled.div`
   display: flex;
 `;
@@ -132,6 +170,25 @@ const StyledFontButton = styled.button<{ font: any }>`
   border: none;
   color: white;
   font-weight: 700;
+  :hover {
+    cursor: pointer;
+    background-color: white;
+    color: #eb7305;
+  }
+`;
+
+const StyledBackButton = styled.div`
+  z-index: 3;
+  font-size: 20px;
+  width: 100%;
+  background-color: gray;
+  border: none;
+  color: white;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
   :hover {
     cursor: pointer;
     background-color: white;

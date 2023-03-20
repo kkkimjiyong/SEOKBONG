@@ -34,18 +34,11 @@ export const Capture = () => {
     getData();
   }, []);
 
-  // --------------------------   폰트바꾸기   -----------------------------
+  // --------------------------   폰트 및 배경바꾸기   -----------------------------
 
   const [font, setFont] = useState<any>();
-
-  const fontData = [
-    { fontFamily: "Black And White Picture", fontSize: "24px" },
-    { fontFamily: "Dokdo", fontSize: "24px" },
-    { fontFamily: "Nanum Brush Script", fontSize: "24px" },
-    { fontFamily: "Noto Sans KR", fontSize: "24px" },
-    { fontFamily: "Song Myung, serif", fontSize: "24px" },
-  ];
-
+  const [back, setBack] = useState<any>(CaptureMain1);
+  const [modal, setModal] = useState<boolean>(true);
   // -------------------  캡쳐  -------------------------------
 
   const captureRef = useRef(null);
@@ -73,10 +66,15 @@ export const Capture = () => {
 
   return (
     <Layout>
-      <div onClick={() => navigate(`/result/${id}`)}>뒤로가기</div>
-      <EditTable setFont={setFont} />
+      <EditTable
+        setFont={setFont}
+        setBack={setBack}
+        setModal={setModal}
+        modal={modal}
+      />
+
       <StyledContainer font={font} ref={captureRef}>
-        <StyledBack src={CaptureMain1} alt="배경" />{" "}
+        <StyledBack src={back} alt="배경" />
         <StyledTitle>{title}</StyledTitle>
         <StyledName>{name}</StyledName>
         <StyledContent>
@@ -84,6 +82,11 @@ export const Capture = () => {
           {content.map((el: any) => {
             return (
               <StyledMainItem>
+                {/* {!modal && (
+                  <StyledCurrentEditArrow>
+                    이 문장 수정하기
+                  </StyledCurrentEditArrow>
+                )} */}
                 {el.content}
                 {hideSub && (
                   <span className="sub">
@@ -115,6 +118,9 @@ export const Capture = () => {
         </svg>
         이미지 다운로드
       </StyledButton>
+      <StyledBackButton onClick={() => navigate(`/result/${id}`)}>
+        뒤로가기
+      </StyledBackButton>
     </Layout>
   );
 };
@@ -130,6 +136,18 @@ const StyledTitle = styled.div`
   justify-content: center;
   align-items: center;
   height: 100px;
+`;
+const StyledBackButton = styled.button`
+  margin-top: 20px;
+  background-color: gray;
+  z-index: 3;
+  font-size: 16px;
+  width: 80%;
+  height: 50px;
+  border: none;
+  color: white;
+  font-weight: 700;
+  height: 50px;
 `;
 
 const StyledName = styled.div`
@@ -154,7 +172,21 @@ const StyledContent = styled.div`
   top: 120px;
   color: black;
 `;
+
+const StyledCurrentEditArrow = styled.div`
+  position: absolute;
+  left: -50px;
+  width: 40px;
+  height: 20px;
+  background-color: rebeccapurple;
+  :hover {
+    cursor: pointer;
+    background-color: aqua;
+  }
+`;
+
 const StyledMainItem = styled.div`
+  position: relative;
   z-index: 3;
   width: 90%;
   margin-bottom: 15px;
@@ -190,6 +222,7 @@ const StyledContainer = styled.div<{ font: any }>`
   margin-top: 150px;
   width: 80%;
   height: 50%;
+  min-height: 300px;
 `;
 
 const StyledBack = styled.img`
