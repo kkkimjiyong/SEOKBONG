@@ -14,7 +14,18 @@ export const ShareMain = () => {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<any>([]);
   const [newContent, setNewContent] = useState<string>("");
-
+  const [count, setCount] = useState<number>();
+  useEffect(() => {
+    const getShareData = async () => {
+      const { count } = await supabase
+        .from("writedown")
+        .select("titleId", { count: "exact", head: true })
+        .eq("titleId", id);
+      console.log(count);
+      setCount(count || 0);
+    };
+    getShareData();
+  }, []);
   const getData = async () => {
     const { data }: any = await supabase
       .from("writedown")
@@ -63,7 +74,7 @@ export const ShareMain = () => {
         <StyledButton onClick={() => navigate(`/write/${id}`)}>
           Start
         </StyledButton>
-        <StyledContinueTxt>나도 이어서 쓰러가기</StyledContinueTxt>
+        <StyledContinueTxt>총 붓자루 개수 : {count}</StyledContinueTxt>
       </StyledContainer>
     </Layout>
   );

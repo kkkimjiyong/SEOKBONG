@@ -29,7 +29,7 @@ export const ShareWrite = () => {
 
   const postData = async () => {
     try {
-      const { data }: any = await supabase
+      await supabase
         .from("writedown")
         .insert({ title, content: newContent, titleId: id, name });
       navigate(`/result/${id}`);

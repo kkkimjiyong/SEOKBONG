@@ -19,7 +19,7 @@ export const Write = () => {
       const { data }: any = await supabase
         .from("writedown")
         .insert([{ title, content, titleId, name }]);
-      navigate(`/result/${titleId}`);
+      navigate(`/capture/${titleId}`);
     } catch (error) {
       console.log(error);
     }

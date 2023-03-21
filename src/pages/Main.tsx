@@ -10,14 +10,14 @@ import { supabase } from "../lib/api";
 
 export const Main = () => {
   const navigate = useNavigate();
-  const [count, setCount] = useState<any>();
+  const [count, setCount] = useState<number>();
   useEffect(() => {
     const getShareData = async () => {
       const { count } = await supabase
         .from("writedown")
         .select("titleId", { count: "exact", head: true });
       console.log(count);
-      setCount(count);
+      setCount(count || 0);
     };
     getShareData();
   }, []);
@@ -28,12 +28,9 @@ export const Main = () => {
         {/* <MainFont className="mainfont" /> */}
         <img src={MainFont} alt="메인로고" className="mainfont" />
         <StyledHelpTxt>
-          방금 내 친구가 <span className="white">릴레이 스토리</span>를
-          공유했습니다. <br />
-          seok-bong이 여러분의 <span className="white">상상력</span>을
-          응원합니다. <br />
-          무궁무진하고 가슴 벅찬 <span className="white">스토리의 세계</span>에
-          함께하세요!
+          석봉아, 어서오거라. <br />
+          한 문장만 적은 다음, 친구에게 공유하면 <br />
+          재미있는 <span className="white">릴레이 스토리</span>완성된단다.
         </StyledHelpTxt>
         <StyledMainListBox>
           <StyledMainItem>
@@ -108,7 +105,7 @@ const StyledMainListBox = styled.div`
   width: 85%;
   height: 50%;
 
-  @media screen and (max-height: 680px) {
+  @media screen and (max-height: 720px) {
     height: 40%;
   }
   padding: 40px;
@@ -149,7 +146,7 @@ const StyledMainItem = styled.div`
 const StyledButton = styled.button`
   z-index: 3;
   font-size: 20px;
-  bottom: 70px;
+  margin-bottom: 50px;
   width: 85%;
   height: 50px;
   background-color: #eb7305;
@@ -166,6 +163,5 @@ const StyledButton = styled.button`
 const StyledContinueTxt = styled.div`
   z-index: 2;
   color: white;
-  margin-top: 20px;
   font-weight: 700;
 `;

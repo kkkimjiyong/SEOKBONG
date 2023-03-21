@@ -7,23 +7,25 @@ import ReactGA from "react-ga4";
 
 type Tdata = {
   title: string;
-  content: string[];
+  content: string;
+  name: string;
+  created_at: string;
 };
+
+type TdataArray = Tdata[];
 
 export const Result = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [title, setTitle] = useState<string>("");
-  const [content, setContent] = useState<any>([]);
+  const [content, setContent] = useState<TdataArray>([]);
   const getData = async () => {
     const { data }: any = await supabase
       .from("writedown")
       .select("title,content,name,created_at")
       .eq("titleId", id);
-    console.log(data[0].content);
     setTitle(data[0].title);
     setContent(data);
-    console.log(data);
   };
 
   const url = `${window.location.origin}/${id}`;
