@@ -30,7 +30,7 @@ export const Main = () => {
         <StyledHelpTxt>
           석봉아, 어서오거라. <br />
           한 문장만 적은 다음, 친구에게 공유하면 <br />
-          재미있는 <span className="white">릴레이 스토리</span>완성된단다.
+          재미있는 <span className="white">릴레이 스토리</span>가 완성된단다.
         </StyledHelpTxt>
         <StyledMainListBox>
           <StyledMainItem>
