@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled, { ThemeContext } from "styled-components";
 import { Layout } from "../global/Layout";
@@ -57,6 +57,18 @@ export const Capture = () => {
   }, []);
 
   // --------------------------   폰트 및 배경바꾸기   -----------------------------
+
+  const imagePreload = (urls: string[]) => {
+    urls.forEach((url: string) => {
+      const img = new Image();
+      img.src = url;
+    });
+  };
+
+  useLayoutEffect(() => {
+    imagePreload([Back1, Back2, Back3, Back4, Back5]);
+  }, []);
+
   const themeData: TthemeData[] = [
     {
       padding: true,
