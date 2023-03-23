@@ -15,6 +15,8 @@ import Back2 from "../assets/Back2.png";
 import Back3 from "../assets/Back3.png";
 import Back4 from "../assets/Back4.png";
 import Back5 from "../assets/Back5.png";
+import { Modal } from "./Modal";
+import { InfoModal } from "./InfoModal";
 
 type TthemeData = {
   padding?: boolean;
@@ -97,7 +99,6 @@ export const Capture = () => {
     },
   ];
   const [theme, setTheme] = useState<any>(themeData[0]);
-  const [modal, setModal] = useState<boolean>(true);
 
   // // -------------------  캡쳐  -------------------------------
 
@@ -123,16 +124,23 @@ export const Capture = () => {
   //   };
   //   onCapture();
   // };
+
+  const [modal, setModal] = useState<boolean>(false);
+  const [modalTxt, setModalTxt] = useState<string>("");
+
   const url = `${window.location.origin}/${id}`;
 
   const copyUrl = () => {
     navigator.clipboard.writeText(url).then(() => {
-      alert("복사완료");
+      setModal(true);
+      setModalTxt("주소가 복사되었습니다!");
     });
   };
 
   return (
     <Layout>
+      {modal && <Modal text={modalTxt} modalClick={() => setModal(false)} />}
+      <InfoModal />
       <StyledEditCtn>
         테마지정
         <StyledEditTable>
@@ -185,7 +193,7 @@ export const Capture = () => {
         <StyledWaterMark src={WaterMark} alt="SEOK-BONG" />
       </StyledContainer>
       <StyledHideButton onClick={() => setHideSub(!hideSub)}>
-        문장별 글쓴이 {hideSub ? "지우기" : "보이기"}
+        문장별 글쓴이 {hideSub ? "지우기" : "보기"}
       </StyledHideButton>
       <StyledButton onClick={copyUrl}>
         <svg
@@ -235,8 +243,8 @@ const StyledEditCtn = styled.div`
   flex-direction: column;
   justify-content: space-around;
   padding: 20px 40px;
-  background-color: #d9d9d9;
-  color: black;
+  background-color: #484848;
+  font-size: 12px;
   font-weight: 700;
 `;
 
@@ -251,7 +259,6 @@ const StyledEditTable = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  background-color: #d9d9d9;
 `;
 
 const StyledTitle = styled.div<{
@@ -270,6 +277,9 @@ const StyledTitle = styled.div<{
   justify-content: center;
   align-items: center;
   height: 100px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 const StyledName = styled.div<{ padding: boolean; color: string }>`
@@ -355,6 +365,9 @@ const StyledThemeBox = styled.div<{
   height: 40px;
   border-radius: 20px;
   border: 1px solid black;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 const StyledBack = styled.img`
@@ -384,6 +397,10 @@ const StyledButton = styled.button`
   &.gray {
     margin-top: 15px;
     background-color: #afadaa;
+    :hover {
+      cursor: pointer;
+      color: #8d8d8d;
+    }
   }
 `;
 const StyledHideButton = styled.div`
@@ -392,6 +409,10 @@ const StyledHideButton = styled.div`
   z-index: 3;
   font-size: 12px;
   border: none;
-  color: white;
+  color: #bdbdbd;
   font-weight: 500;
+  :hover {
+    color: white;
+    cursor: pointer;
+  }
 `;

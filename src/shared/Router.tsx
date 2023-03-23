@@ -6,6 +6,7 @@ import { Result } from "../pages/Result";
 import { ShareMain } from "../pages/ShareMain";
 import { ShareWrite } from "../pages/ShareWrite";
 import { Capture } from "../pages/Capture";
+import { NotFound } from "../pages/NotFound";
 
 const Router = () => {
   return (
@@ -16,6 +17,7 @@ const Router = () => {
       <Route path="/write/:id" element={<ShareWrite />} />
       <Route path="/result/:id" element={<Result />} />
       <Route path="/capture/:id" element={<Capture />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

@@ -11,6 +11,7 @@ export const Write = () => {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [name, setName] = useState<string>("");
+  const [errorTxt, setErrorTxt] = useState<boolean>(false);
   const [id, setId] = useState<string>("");
 
   const postData = async () => {
@@ -30,23 +31,25 @@ export const Write = () => {
       case 0:
         if (title.trim().length !== 0) {
           setProcess(1);
+          setErrorTxt(false);
         } else {
-          alert("빈칸을 채워주세요!");
+          setErrorTxt(true);
         }
 
         break;
       case 1:
         if (content.trim().length !== 0) {
+          setErrorTxt(false);
           setProcess(2);
         } else {
-          alert("빈칸을 채워주세요!");
+          setErrorTxt(true);
         }
         break;
       case 2:
         if (name.trim().length !== 0) {
           postData();
         } else {
-          alert("빈칸을 채워주세요!");
+          setErrorTxt(true);
         }
         break;
       default:
@@ -83,6 +86,7 @@ export const Write = () => {
       </StyledTitle>
       {process === 0 && (
         <StyledInput
+          maxLength={10}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="예) 효자 한석봉 (10글자 이내)"
         />
@@ -99,6 +103,7 @@ export const Write = () => {
           placeholder="예) 한석봉"
         />
       )}
+      {errorTxt && <StyledErrorTxt>빈칸을 채워주세요</StyledErrorTxt>}
       <StyledNextButton onClick={onClickHandler}>Next</StyledNextButton>
     </Layout>
   );
@@ -109,9 +114,10 @@ const StyledTitle = styled.div`
   display: flex;
   flex-direction: column;
   line-height: 1.6;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   margin-top: 100px;
+
   .sub {
     margin-top: 5px;
     width: 100%;
@@ -133,6 +139,13 @@ const StyledInput = styled.input`
     color: #727272;
   }
   border: 1px solid #afafaf;
+`;
+
+const StyledErrorTxt = styled.div`
+  margin-top: 5px;
+  color: red;
+  width: 85%;
+  font-size: 12px;
 `;
 
 const StyledNextButton = styled.button`

@@ -8,7 +8,7 @@ import MainFont from "../assets/MainFont.png";
 import styled from "styled-components";
 import { supabase } from "../lib/api";
 
-export const Main = () => {
+export const NotFound = () => {
   const navigate = useNavigate();
   const [count, setCount] = useState<number>();
   useEffect(() => {

@@ -7,22 +7,26 @@ import MainBackground2 from "../assets/MainBack2.png";
 import MainFont from "../assets/MainFont.png";
 import styled from "styled-components";
 import { supabase } from "../lib/api";
+import { Modal } from "./Modal";
 
 export const ShareMain = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<any>([]);
-  const [newContent, setNewContent] = useState<string>("");
   const [count, setCount] = useState<number>();
+  const [share, setShare] = useState<number>(0);
+  const [modal, setModal] = useState<boolean>(false);
+  const [modalTxt, setModalTxt] = useState<string>("");
+  const [modalClick, setModalClick] = useState<any>();
+
   useEffect(() => {
     const getShareData = async () => {
       const { count } = await supabase
         .from("writedown")
-        .select("titleId", { count: "exact", head: true })
-        .eq("titleId", id);
+        .select("titleId", { count: "exact", head: true });
       console.log(count);
-      setCount(count || 0);
+      setShare(count || 0);
     };
     getShareData();
   }, []);
@@ -32,9 +36,10 @@ export const ShareMain = () => {
       .select("title,content,name")
       .eq("titleId", id);
     if (data.length === 0) {
-      alert("에러발생");
+      setModal(true);
+      setModalTxt("잘못된 링크입니다. 다시 시도해주세요!");
     }
-
+    setCount(data.length);
     setTitle(data[0].title);
     // 문장 합치기
     console.log(data);
@@ -43,22 +48,21 @@ export const ShareMain = () => {
   useEffect(() => {
     getData();
   }, []);
-  console.log(content);
+
   return (
     <Layout>
       <StyledContainer>
         <StyledMainImg src={MainBackground2} alt="메인배경" />
-
         <img src={MainFont} alt="메인로고" className="mainfont" />
         <StyledHelpTxt>
-          방금 내 친구가 <span className="white">릴레이 스토리</span>를
-          공유했습니다. <br />
-          seok-bong이 여러분의<span className="white">상상력</span>을
-          응원합니다. <br />
-          무궁무진하고 가슴 벅찬 <span className="white">스토리의 세계</span>에
-          함께하세요!
+          석봉아, 어서오거라. 네 친구가 이야기를 쓰다가 도망갔단다. <br />
+          한 문장만 적은 다음, 친구에게 공유하면 <br />
+          재미있는 <span className="white">릴레이 스토리</span>가 완성된단다.
         </StyledHelpTxt>
-        <StyledTitle>제목: {title}</StyledTitle>
+        <StyledTitle>
+          제목: {title}
+          <div className="max">최대인원 ({count}/4)</div>
+        </StyledTitle>
         <StyledMainListBox>
           {content?.map((el: any) => {
             return (
@@ -71,11 +75,35 @@ export const ShareMain = () => {
 
           <StyledMainListShadow />
         </StyledMainListBox>
-        <StyledButton onClick={() => navigate(`/write/${id}`)}>
+        <StyledButton
+          onClick={() => {
+            if (count === 4) {
+              setModal(true);
+              setModalTxt("완성된 글은 이어서 작성할 수 없습니다.");
+            } else {
+              navigate(`/write/${id}`);
+            }
+          }}
+        >
           Start
         </StyledButton>
-        <StyledContinueTxt>총 붓자루 개수 : {count}</StyledContinueTxt>
+        <StyledButtonTxt onClick={() => navigate("/")}>
+          나도 새로운 글 쓰러가기
+        </StyledButtonTxt>
+        <StyledContinueTxt>총 공유 수: {share}</StyledContinueTxt>
       </StyledContainer>
+      {modal && (
+        <Modal
+          text={modalTxt}
+          modalClick={() => {
+            if (count === 4) {
+              setModal(false);
+            } else {
+              window.location.reload();
+            }
+          }}
+        />
+      )}
     </Layout>
   );
 };
@@ -105,11 +133,11 @@ const StyledMainImg = styled.img`
 
 const StyledHelpTxt = styled.div`
   z-index: 2;
-  margin-top: 60px;
-  z-index: 2;
   font-size: 12px;
   line-height: 1.8;
   text-align: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
   color: #fda757;
   .white {
     color: white;
@@ -119,10 +147,19 @@ const StyledHelpTxt = styled.div`
 const StyledTitle = styled.div`
   margin-top: 50px;
   z-index: 2;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: white;
   width: 85%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+  .max {
+    margin-left: 10px;
+    font-size: 12px;
+    font-weight: 500;
+  }
 `;
 const StyledMainListBox = styled.div`
   position: relative;
@@ -179,7 +216,6 @@ const StyledButton = styled.button`
   margin-top: 70px;
   background-color: #eb7305;
   border: none;
-
   color: white;
   font-weight: 700;
   font-size: 16px;
@@ -190,8 +226,22 @@ const StyledButton = styled.button`
   }
 `;
 
+const StyledButtonTxt = styled.div`
+  z-index: 5;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #bcbcbc;
+  text-decoration: underline;
+  :hover {
+    color: white;
+  }
+`;
+
 const StyledContinueTxt = styled.div`
+  position: absolute;
+  font-size: 12px;
+  font-weight: 700;
+  bottom: 20px;
   z-index: 2;
-  color: white;
-  margin-top: 20px;
+  color: #bcbcbc;
 `;

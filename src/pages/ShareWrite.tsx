@@ -13,7 +13,7 @@ export const ShareWrite = () => {
   const [content, setContent] = useState<any>([]);
   const [newContent, setNewContent] = useState<string>("");
   const [name, setName] = useState<string>("");
-
+  const [errorTxt, setErrorTxt] = useState<boolean>(false);
   const getData = async () => {
     try {
       const { data }: any = await supabase
@@ -42,17 +42,19 @@ export const ShareWrite = () => {
     switch (process) {
       case 0:
         if (newContent.trim().length !== 0) {
+          setErrorTxt(false);
           setProcess(1);
         } else {
-          alert("빈칸을 채워주시오!");
+          setErrorTxt(true);
         }
 
         break;
       case 1:
         if (name.trim().length !== 0) {
           postData();
+          setErrorTxt(false);
         } else {
-          alert("빈칸을 채워주시오!");
+          setErrorTxt(true);
         }
         break;
       default:
@@ -106,6 +108,7 @@ export const ShareWrite = () => {
           placeholder="예) 한석봉"
         />
       )}
+      {errorTxt && <StyledErrorTxt>빈칸을 채워주세요</StyledErrorTxt>}
       <StyledNextButton onClick={onClickHandler}>Finish</StyledNextButton>
     </Layout>
   );
@@ -116,7 +119,7 @@ const StyledTitle = styled.div`
   display: flex;
   flex-direction: column;
   line-height: 1.6;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   margin-top: 100px;
   .sub {
@@ -170,7 +173,12 @@ const StyledInput = styled.input`
   }
   border: 1px solid #afafaf;
 `;
-
+const StyledErrorTxt = styled.div`
+  margin-top: 5px;
+  color: red;
+  width: 85%;
+  font-size: 12px;
+`;
 const StyledNextButton = styled.button`
   margin-top: 15px;
   width: 85%;
