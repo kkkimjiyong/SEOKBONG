@@ -46,9 +46,6 @@ export const Write = () => {
         if (content.trim().length !== 0) {
           setError(false);
           setProcess(2);
-        } else if (title.trim().length > 10) {
-          setError(true);
-          setErrorTxt("10글자 이내로 작성해주세요");
         } else {
           setError(true);
           setErrorTxt("빈칸을 채워주세요");
@@ -64,6 +61,29 @@ export const Write = () => {
           setError(true);
         }
         break;
+      default:
+        break;
+    }
+  };
+
+  const onBtnColor = () => {
+    switch (process) {
+      case 0:
+        if (title.trim().length !== 0 && title.trim().length <= 10) {
+          return true;
+        }
+        break;
+      case 1:
+        if (content.trim().length !== 0) {
+          return true;
+        }
+        break;
+      case 2:
+        if (name.trim().length !== 0 && name.trim().length <= 10) {
+          return true;
+        }
+        break;
+
       default:
         break;
     }
@@ -115,7 +135,9 @@ export const Write = () => {
         />
       )}
       {error && <StyledErrorTxt>{errorTxt}</StyledErrorTxt>}
-      <StyledNextButton onClick={onClickHandler}>Next</StyledNextButton>
+      <StyledNextButton error={onBtnColor()} onClick={onClickHandler}>
+        Next
+      </StyledNextButton>
     </Layout>
   );
 };
@@ -159,7 +181,7 @@ const StyledErrorTxt = styled.div`
   font-size: 12px;
 `;
 
-const StyledNextButton = styled.button`
+const StyledNextButton = styled.button<{ error: any }>`
   margin-top: 25px;
   width: 85%;
   font-size: 20px;
@@ -167,7 +189,7 @@ const StyledNextButton = styled.button`
   height: 50px;
   border: none;
   color: white;
-  background-color: #b0adaa;
+  background-color: ${({ error }) => (!error ? "#b0adaa" : "#eb7305")};
   :hover {
     cursor: pointer;
     color: #d2d2d2;

@@ -69,6 +69,24 @@ export const ShareWrite = () => {
     }
   };
 
+  const onBtnColor = () => {
+    switch (process) {
+      case 0:
+        if (newContent.trim().length !== 0) {
+          return true;
+        }
+        break;
+      case 1:
+        if (name.trim().length !== 0 && name.trim().length <= 10) {
+          return true;
+        }
+        break;
+
+      default:
+        break;
+    }
+  };
+
   useEffect(() => {
     getData();
   }, []);
@@ -116,7 +134,9 @@ export const ShareWrite = () => {
         />
       )}
       {error && <StyledErrorTxt>{errorTxt}</StyledErrorTxt>}
-      <StyledNextButton onClick={onClickHandler}>Finish</StyledNextButton>
+      <StyledNextButton error={onBtnColor()} onClick={onClickHandler}>
+        Finish
+      </StyledNextButton>
     </Layout>
   );
 };
@@ -186,14 +206,14 @@ const StyledErrorTxt = styled.div`
   width: 85%;
   font-size: 12px;
 `;
-const StyledNextButton = styled.button`
+const StyledNextButton = styled.button<{ error: any }>`
   margin-top: 15px;
   width: 85%;
   font-size: 20px;
   height: 50px;
   border: none;
   color: white;
-  background-color: #b0adaa;
+  background-color: ${({ error }) => (!error ? "#b0adaa" : "#eb7305")};
   :hover {
     cursor: pointer;
     color: #d2d2d2;
