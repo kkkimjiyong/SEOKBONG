@@ -49,6 +49,9 @@ export const ShareMain = () => {
     getData();
   }, []);
 
+  //클릭해서 보기
+  const [more, setMore] = useState<boolean>(false);
+
   return (
     <Layout>
       <StyledContainer>
@@ -63,16 +66,18 @@ export const ShareMain = () => {
           제목: {title}
           <div className="max">최대인원 ({count}/4)</div>
         </StyledTitle>
-        <StyledMainListBox>
+        <StyledMainListBox more={more}>
+          <div className="moreBtn" onClick={() => navigate(`/capture/${id}`)}>
+            결과물 먼저 보기
+          </div>
           {content?.map((el: any) => {
             return (
-              <StyledMainItem>
+              <StyledMainItem more={more}>
                 {el.content}
                 <div className="sub">2023.02.21 - 아무개</div>
               </StyledMainItem>
             );
           })}
-
           <StyledMainListShadow />
         </StyledMainListBox>
         <StyledButton
@@ -85,7 +90,7 @@ export const ShareMain = () => {
             }
           }}
         >
-          Start
+          붓자루 이어받기
         </StyledButton>
         <StyledButtonTxt onClick={() => navigate("/")}>
           나도 새로운 글 쓰러가기
@@ -142,6 +147,9 @@ const StyledHelpTxt = styled.div`
   .white {
     color: white;
   }
+  @media screen and (max-height: 650px) {
+    display: none;
+  }
 `;
 
 const StyledTitle = styled.div`
@@ -161,7 +169,7 @@ const StyledTitle = styled.div`
     font-weight: 500;
   }
 `;
-const StyledMainListBox = styled.div`
+const StyledMainListBox = styled.div<{ more: boolean }>`
   position: relative;
   color: white;
   margin-top: 30px;
@@ -171,11 +179,24 @@ const StyledMainListBox = styled.div`
   padding: 20px 0;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow-y: scroll;
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
-  @media screen and (max-height: 680px) {
-    height: 20%;
+  .moreBtn {
+    position: absolute;
+    font-size: 12px;
+    color: #fda757;
+    text-decoration: underline;
+    opacity: 0.7;
+    z-index: 10;
+    bottom: 20px;
+    :hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+  }
+  @media screen and (max-height: 760px) {
+    max-height: 20%;
   }
 `;
 const StyledMainListShadow = styled.div`
@@ -191,8 +212,8 @@ const StyledMainListShadow = styled.div`
   );
 `;
 
-const StyledMainItem = styled.div`
-  filter: blur(1px);
+const StyledMainItem = styled.div<{ more: boolean }>`
+  filter: ${({ more }) => (more ? "blur(0px)" : "blur(1px)")};
   width: 80%;
   margin-bottom: 20px;
   font-size: 12px;
@@ -233,6 +254,7 @@ const StyledButtonTxt = styled.div`
   color: #bcbcbc;
   text-decoration: underline;
   :hover {
+    cursor: pointer;
     color: white;
   }
 `;
@@ -243,5 +265,5 @@ const StyledContinueTxt = styled.div`
   font-weight: 700;
   bottom: 20px;
   z-index: 2;
-  color: #bcbcbc;
+  color: #ebebeb;
 `;

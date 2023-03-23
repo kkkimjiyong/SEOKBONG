@@ -2,7 +2,11 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import { Layout } from "../global/Layout";
 import WaterMark from "../assets/waterMark2.png";
-export const InfoModal = () => {
+export const InfoModal = ({
+  setInfoModal,
+}: {
+  setInfoModal: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   return (
     <StyledContainer>
       <StyledContentBox>
@@ -19,11 +23,12 @@ export const InfoModal = () => {
           <div></div>
           <br />
           많은 피드백 부탁드리겠습니다!
-          <div>-한석봉 올림-</div>
+          <div className="writer">-한석봉 올림-</div>
         </StyledContentTitle>
         <StyledConfirmBtn
           onClick={() => {
             localStorage.setItem("done", "true");
+            setInfoModal(false);
           }}
         >
           ok
@@ -46,9 +51,9 @@ opacity: 0;
 
 const StyledWaterMark = styled.img`
   position: absolute;
-  bottom: 70px;
-  right: 20px;
-  opacity: 0.4;
+  bottom: 20px;
+  left: 20px;
+  opacity: 0.2;
   width: 80px;
 `;
 
@@ -61,7 +66,7 @@ const StyledContainer = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
 `;
 
 const StyledContentBox = styled.div`
@@ -83,6 +88,13 @@ const StyledContentTitle = styled.div`
   color: #ff9d42;
   line-height: 1.6;
   width: 80%;
+  position: relative;
+  .writer {
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+  }
   .large {
     margin-bottom: 10px;
     color: #ff9d42;

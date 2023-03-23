@@ -15,8 +15,10 @@ import Back2 from "../assets/Back2.png";
 import Back3 from "../assets/Back3.png";
 import Back4 from "../assets/Back4.png";
 import Back5 from "../assets/Back5.png";
+import Back6 from "../assets/Back6.png";
 import { Modal } from "./Modal";
 import { InfoModal } from "./InfoModal";
+import { SiRelay } from "react-icons/si";
 
 type TthemeData = {
   padding?: boolean;
@@ -97,8 +99,16 @@ export const Capture = () => {
       contentFont: "14px",
       fontColor: "black",
     },
+    {
+      backSrc: Back6,
+      src: Theme1,
+      fontFamily: "inter",
+      titleFont: "20px",
+      contentFont: "12px",
+      fontColor: "white",
+    },
   ];
-  const [theme, setTheme] = useState<any>(themeData[0]);
+  const [theme, setTheme] = useState<any>(themeData[5]);
 
   // // -------------------  캡쳐  -------------------------------
 
@@ -128,33 +138,43 @@ export const Capture = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [modalTxt, setModalTxt] = useState<string>("");
 
+  const [infoModal, setInfoModal] = useState<boolean>(true);
+
   const url = `${window.location.origin}/${id}`;
 
   const copyUrl = () => {
     navigator.clipboard.writeText(url).then(() => {
       setModal(true);
-      setModalTxt("주소가 복사되었습니다!");
+      setModalTxt("링크가 복사되었습니다!");
     });
   };
 
   return (
     <Layout>
       {modal && <Modal text={modalTxt} modalClick={() => setModal(false)} />}
-      <InfoModal />
+      {infoModal && !localStorage.getItem("done") && (
+        <InfoModal setInfoModal={setInfoModal} />
+      )}
       <StyledEditCtn>
-        테마지정
+        <StyledEditFlex>
+          <div>테마지정</div>
+          <div className="reset" onClick={() => setTheme(themeData[5])}>
+            초기화
+          </div>
+        </StyledEditFlex>
         <StyledEditTable>
-          {themeData.map((el: TthemeData) => {
-            return (
-              <StyledThemeBox
-                onClick={() => setTheme(el)}
-                fontFamily={el.fontFamily}
-                fontSize={el.titleFont}
-                color={el.fontColor}
-              >
-                가<StyledBack src={el.src} alt="배경" />
-              </StyledThemeBox>
-            );
+          {themeData.map((el: TthemeData, idx: number) => {
+            if (idx !== 5)
+              return (
+                <StyledThemeBox
+                  onClick={() => setTheme(el)}
+                  fontFamily={el.fontFamily}
+                  fontSize={el.titleFont}
+                  color={el.fontColor}
+                >
+                  가<StyledBack src={el.src} alt="배경" />
+                </StyledThemeBox>
+              );
           })}
         </StyledEditTable>
       </StyledEditCtn>
@@ -196,20 +216,8 @@ export const Capture = () => {
         문장별 글쓴이 {hideSub ? "지우기" : "보기"}
       </StyledHideButton>
       <StyledButton onClick={copyUrl}>
-        <svg
-          style={{ marginRight: "10px" }}
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M14 11V14H2V11H0V14C0 15.1 0.9 16 2 16H14C15.1 16 16 15.1 16 14V11H14ZM3 5L4.41 6.41L7 3.83V12H9V3.83L11.59 6.41L13 5L8 0L3 5Z"
-            fill="white"
-          />
-        </svg>
-        공유하기
+        <SiRelay size={24} style={{ marginRight: "5px" }} />
+        붓자루 넘겨주기
       </StyledButton>
       <StyledButton className="gray" onClick={() => navigate(`/`)}>
         <svg
@@ -259,6 +267,17 @@ const StyledEditTable = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+`;
+
+const StyledEditFlex = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .reset {
+    color: #bdbdbd;
+    text-decoration: underline;
+  }
 `;
 
 const StyledTitle = styled.div<{

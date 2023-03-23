@@ -55,7 +55,9 @@ export const Main = () => {
           </StyledMainItem>
           <StyledMainListShadow />
         </StyledMainListBox>
-        <StyledButton onClick={() => navigate("/write")}>Start</StyledButton>
+        <StyledButton onClick={() => navigate("/write")}>
+          첫 붓자루 쥐러가기
+        </StyledButton>
         <StyledContinueTxt>참여 수 : {count}</StyledContinueTxt>
       </StyledContainer>
     </Layout>
@@ -145,7 +147,7 @@ const StyledMainItem = styled.div`
 
 const StyledButton = styled.button`
   z-index: 3;
-  font-size: 20px;
+  font-size: 16px;
   margin-bottom: 50px;
   width: 85%;
   height: 50px;
