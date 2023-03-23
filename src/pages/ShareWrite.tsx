@@ -33,7 +33,7 @@ export const ShareWrite = () => {
       await supabase
         .from("writedown")
         .insert({ title, content: newContent, titleId: id, name });
-      navigate(`/result/${id}`);
+      navigate(`/capture/${id}`);
     } catch (error) {
       console.log(error);
     }
