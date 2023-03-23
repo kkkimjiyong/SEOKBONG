@@ -11,7 +11,8 @@ export const Write = () => {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [name, setName] = useState<string>("");
-  const [errorTxt, setErrorTxt] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [errorTxt, setErrorTxt] = useState<string>("");
   const [id, setId] = useState<string>("");
 
   const postData = async () => {
@@ -29,27 +30,38 @@ export const Write = () => {
   const onClickHandler = () => {
     switch (process) {
       case 0:
-        if (title.trim().length !== 0) {
+        if (title.trim().length !== 0 && title.trim().length <= 10) {
           setProcess(1);
-          setErrorTxt(false);
+          setError(false);
+        } else if (title.trim().length > 10) {
+          setError(true);
+          setErrorTxt("10글자 이내로 작성해주세요");
         } else {
-          setErrorTxt(true);
+          setError(true);
+          setErrorTxt("빈칸을 채워주세요");
         }
 
         break;
       case 1:
         if (content.trim().length !== 0) {
-          setErrorTxt(false);
+          setError(false);
           setProcess(2);
+        } else if (title.trim().length > 10) {
+          setError(true);
+          setErrorTxt("10글자 이내로 작성해주세요");
         } else {
-          setErrorTxt(true);
+          setError(true);
+          setErrorTxt("빈칸을 채워주세요");
         }
         break;
       case 2:
-        if (name.trim().length !== 0) {
+        if (name.trim().length !== 0 && name.trim().length <= 10) {
           postData();
+        } else if (name.trim().length > 10) {
+          setError(true);
+          setErrorTxt("10글자 이내로 작성해주세요");
         } else {
-          setErrorTxt(true);
+          setError(true);
         }
         break;
       default:
@@ -86,7 +98,6 @@ export const Write = () => {
       </StyledTitle>
       {process === 0 && (
         <StyledInput
-          maxLength={10}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="예) 효자 한석봉 (10글자 이내)"
         />
@@ -100,10 +111,10 @@ export const Write = () => {
       {process === 2 && (
         <StyledInput
           onChange={(e) => setName(e.target.value)}
-          placeholder="예) 한석봉"
+          placeholder="예) 한석봉 (10글자 이내)"
         />
       )}
-      {errorTxt && <StyledErrorTxt>빈칸을 채워주세요</StyledErrorTxt>}
+      {error && <StyledErrorTxt>{errorTxt}</StyledErrorTxt>}
       <StyledNextButton onClick={onClickHandler}>Next</StyledNextButton>
     </Layout>
   );

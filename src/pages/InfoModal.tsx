@@ -18,9 +18,19 @@ export const InfoModal = ({
           분의 개발자의 수고로 만들어졌습니다.
           <br />
           아래 설문조사링크를 통해, 여러분의 피드백을 받고있습니다.
-          <br /> (설문조사는 1분 이내로 소요됩니다)
+          <br /> <span className="sub">(설문조사는 1분 이내로 소요됩니다)</span>
           <br />
-          <div></div>
+          <div
+            onClick={() =>
+              window.open(
+                "https://docs.google.com/forms/d/e/1FAIpQLScyjx6Nvvnl-W7duEMS1tO3wiFMBYmEJFCU-1dM4pnbqDfqpg/viewform"
+              )
+            }
+            className="link"
+          >
+            설문조사 하러가기
+          </div>
+          <br />
           <br />
           많은 피드백 부탁드리겠습니다!
           <div className="writer">-한석봉 올림-</div>
@@ -86,9 +96,10 @@ const StyledContentTitle = styled.div`
   font-size: 14px;
   /* font-weight: 700; */
   color: #ff9d42;
-  line-height: 1.6;
+  line-height: 1.7;
   width: 80%;
   position: relative;
+  font-family: "Song Myung";
   .writer {
     margin-top: 30px;
     width: 100%;
@@ -97,9 +108,16 @@ const StyledContentTitle = styled.div`
   }
   .large {
     margin-bottom: 10px;
-    color: #ff9d42;
+    color: #ffa754;
     font-size: 20px;
     font-weight: 700;
+  }
+  .sub {
+    opacity: 0.5;
+  }
+  .link {
+    text-decoration: underline;
+    color: #ffa754;
   }
 `;
 

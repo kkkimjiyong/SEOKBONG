@@ -13,7 +13,8 @@ export const ShareWrite = () => {
   const [content, setContent] = useState<any>([]);
   const [newContent, setNewContent] = useState<string>("");
   const [name, setName] = useState<string>("");
-  const [errorTxt, setErrorTxt] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [errorTxt, setErrorTxt] = useState<string>("");
   const getData = async () => {
     try {
       const { data }: any = await supabase
@@ -42,20 +43,26 @@ export const ShareWrite = () => {
     switch (process) {
       case 0:
         if (newContent.trim().length !== 0) {
-          setErrorTxt(false);
+          setError(false);
           setProcess(1);
         } else {
-          setErrorTxt(true);
+          setError(true);
+          setErrorTxt("빈칸을 입력해주세요");
         }
 
         break;
       case 1:
-        if (name.trim().length !== 0) {
+        if (name.trim().length !== 0 && name.trim().length <= 10) {
           postData();
-          setErrorTxt(false);
+          setError(false);
+        } else if (name.trim().length > 10) {
+          setError(true);
+          setErrorTxt("10글자 이내로 작성해주세요");
         } else {
-          setErrorTxt(true);
+          setError(true);
+          setErrorTxt("빈칸을 입력해주세요");
         }
+
         break;
       default:
         break;
@@ -105,10 +112,10 @@ export const ShareWrite = () => {
       {process === 1 && (
         <StyledInput
           onChange={(e) => setName(e.target.value)}
-          placeholder="예) 한석봉"
+          placeholder="예) 한석봉 (10글자 이내)"
         />
       )}
-      {errorTxt && <StyledErrorTxt>빈칸을 채워주세요</StyledErrorTxt>}
+      {error && <StyledErrorTxt>{errorTxt}</StyledErrorTxt>}
       <StyledNextButton onClick={onClickHandler}>Finish</StyledNextButton>
     </Layout>
   );

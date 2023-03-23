@@ -179,7 +179,7 @@ const StyledMainListBox = styled.div<{ more: boolean }>`
   padding: 20px 0;
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
+  overflow: hidden;
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
   .moreBtn {
