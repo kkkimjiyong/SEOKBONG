@@ -332,7 +332,7 @@ const StyledMainItem = styled.div<{ color: string }>`
   color: ${({ color }) => color && `${color}`};
   position: relative;
   z-index: 3;
-  width: 90%;
+  width: 100%;
   margin-bottom: 15px;
   line-height: 1.5;
   word-break: break-all;
